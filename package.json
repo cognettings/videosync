@@ -1,0 +1,23 @@
+{
+  "name": "videosync",
+  "version": "0.0.0",
+  "description": "Web app for syncing video playback to watch with friends.",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "jshint src",
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cognettings/videosync.git"
+  },
+  "author": "John Cognetti (cognettings@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cognettings/videosync/issues"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "nodemon": "^1.8.1"
+  }
+}
