@@ -1,0 +1,21 @@
+{
+  "name": "videosync",
+  "description": "Web app for syncing video playback to watch with friends.",
+  "main": "src/app.js",
+  "authors": [
+    "John Cognetti (cognettings@gmail.com)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/cognettings/videosync",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
