@@ -1,21 +1,12 @@
 var express = require('express');
 var path = require('path');
 var app = express();
+var router = require('./router.js');
 
 app.use(express.static('bower_components'));
 app.use(express.static('client'));
 
-app.get('/', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/../client/index.html'));
-});
-
-app.get('/watch', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/../client/watch.html'));
-});
-
-app.get('/history', function (req, res) {
-  res.sendFile(path.resolve(__dirname + '/../client/history.html'));
-});
+router(app);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
