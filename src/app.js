@@ -13,6 +13,10 @@ app.get('/watch', function (req, res) {
   res.sendFile(path.resolve(__dirname + '/../client/watch.html'));
 });
 
+app.get('/history', function (req, res) {
+  res.sendFile(path.resolve(__dirname + '/../client/history.html'));
+});
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
