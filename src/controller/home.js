@@ -13,12 +13,12 @@ function home(req, res) {
 
   sampleData.duration = secondsToHHMMSS(sampleData.duration);
   
-  res.render('home');
-  /*
+  //res.render('home');
+  
   res.render('home', {
     currentlyPlaying: sampleData
   });
-  */
+  
 }
 
 module.exports.homePage = home;
