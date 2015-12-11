@@ -1,0 +1,65 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    meta(name='description', content='Watch Youtube with friends.')
+    meta(name='author', content='John Cognetti')
+    link(rel='icon', href='../../favicon.ico')
+    title WeTube - Watch Youtube with friends
+    // Bootstrap core CSS
+    link(href='bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    // Custom styles for this template
+    link(href='jumbotron-narrow.css', rel='stylesheet')
+  body
+    .container
+      .header
+        nav
+          ul.nav.nav-pills.pull-right
+            li(role='presentation')
+              a(href='/') Home
+            li.active(role='presentation')
+              a(href='/watch') Watch
+            li(role='presentation')
+              a(href='/history') History
+        h1
+          | WeTube 
+          small Watch Youtube with friends
+      if currentlyPlaying
+        .jumbotron
+          h2
+            | You are 
+            u
+              if isMaster
+                |controlling
+              else
+                |watching
+          // 16:9 aspect ratio
+          .embed-responsive.embed-responsive-16by9
+            if isMaster
+              video.embed-responsive-item(src=currentlyPlaying.videoUrl, controls)
+            else
+              video.embed-responsive-item(src=currentlyPlaying.videoUrl)
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Currently playing
+        if currentlyPlaying
+          .panel-body
+            .media
+              .media-left
+                a(href=currentlyPlaying.youtubeUrl)
+                  img.media-object.img-rounded(src=currentlyPlaying.thumbnail, alt='video thumbnail')
+              .media-body
+                h4.media-heading
+                  |#{currentlyPlaying.title}
+                  br
+                  |#{currentlyPlaying.author}
+                  br
+                  |#{currentlyPlaying.duration}
+        else
+          .panel-body
+            h2 Nothing is currently playing
+      footer.footer
+        p © 2015 John Cognetti
