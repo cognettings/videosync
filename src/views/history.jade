@@ -1,0 +1,53 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    meta(name='description', content='Watch Youtube with friends.')
+    meta(name='author', content='John Cognetti')
+    link(rel='icon', href='../../favicon.ico')
+    title WeTube - Watch Youtube with friends
+    // Bootstrap core CSS
+    link(href='bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    // Custom styles for this template
+    link(href='jumbotron-narrow.css', rel='stylesheet')
+  body
+    .container
+      .header
+        nav
+          ul.nav.nav-pills.pull-right
+            li(role='presentation')
+              a(href='/') Home
+            li(role='presentation')
+              a(href='/watch') Watch
+            li.active(role='presentation')
+              a(href='/history') History
+        h1
+          | WeTube 
+          small Watch Youtube with friends
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Recently watched
+        mixin video(info)
+          .panel-body
+            .media
+              .media-left
+                a(href=info.youtubeUrl)
+                  img.media-object.img-rounded(src=info.thumbnail, alt='video thumbnail')
+              .media-body
+                h4.media-heading
+                  |#{info.title}
+                  br
+                p
+                  |#{info.author}
+                  br
+                  |#{info.duration}
+        each videoInfo in videos
+          +video(videoInfo)
+        if videos.length == 0
+          .panel-body
+            h2 No recently watched videos
+      footer.footer
+        p © 2015 John Cognetti
