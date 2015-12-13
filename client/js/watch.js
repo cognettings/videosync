@@ -8,7 +8,12 @@ function init() {
   video = document.querySelector('video');
   
   socket = io.connect();
+  socket.on('msgVideoEnd', receiveVideoEndMessage);
   socket.on('msgVideoState', receiveVideoStateMessage);
+}
+
+function receiveVideoEndMessage() {
+  window.location = '/';
 }
 
 function receiveVideoStateMessage(videoState) {

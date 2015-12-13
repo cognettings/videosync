@@ -5,7 +5,7 @@
     video.addEventListener('play', sendStateMessage);
     video.addEventListener('pause', sendStateMessage);
     video.addEventListener('seeked', sendStateMessage);
-    video.addEventListener('end', sendEndMessage);
+    video.addEventListener('ended', sendEndMessage);
   }
 })();  
   
@@ -18,7 +18,6 @@ function getVideoState() {
 }
 
 function sendStateMessage() {
-  console.log(getVideoState());
   socket.emit('msgVideoState', getVideoState());
 }
 

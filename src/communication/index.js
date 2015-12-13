@@ -1,11 +1,19 @@
 var io;
 var state = require('./state.js');
+var controllerState = require('../controller/state.js');
+
+var masterId;
 
 function setIO(ioChannel) {
   io = ioChannel;
   
   io.on('connection', function (socket) {
+    if (!masterId && controllerState.getVideoInfo()) {
+      masterId = socket.id;
+    }
+    
     socket.on('msgVideoState', function (data) {
+      masterId = this.id;
       /*
       data = {
         isPlaying: bool,
@@ -17,10 +25,22 @@ function setIO(ioChannel) {
       socket.broadcast.emit('msgVideoState', state.getVideoState());
     });
     
+    socket.on('disconnect', function() {
+      if (this.id === masterId) {
+        endVideo();
+      }
+    });
+    
     socket.on('msgVideoEnd', function() {
-      io.sockets.emit('msgVideoEnd');
+      endVideo();
     });
   });
+}
+
+function endVideo() {
+  controllerState.setVideoInfo(null);
+  masterId = null;
+  io.sockets.emit('msgVideoEnd');
 }
 
 module.exports = {
