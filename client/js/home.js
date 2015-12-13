@@ -9,9 +9,9 @@ function init() {
 }
 
 function sendVideoUrl(evt) {
-  console.log(evt);
-  if (evt.type === 'keypress' && evt.keyCode != 13)
+  if (evt.type === 'keypress' && evt.keyCode != 13) {
       return;
+  }
   
   var lblVideoUrl = document.querySelector('#lblVideoUrl');
   

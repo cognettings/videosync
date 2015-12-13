@@ -2,5 +2,5 @@ var videoInfo;
 
 module.exports = {
   getVideoInfo: function() {return videoInfo;},
-  setVideoInfo: function(info) {videoInfo = info;},
+  setVideoInfo: function(info) {videoInfo = info;}
 };

@@ -1,12 +1,24 @@
 var io;
+var state = require('./state.js');
 
 function setIO(ioChannel) {
   io = ioChannel;
   
   io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-      console.log(data);
+    socket.on('msgVideoState', function (data) {
+      /*
+      data = {
+        isPlaying: bool,
+        playTime: Number,
+        msgTime: Date
+      }
+      */
+      state.setVideoState(data);
+      socket.broadcast.emit('msgVideoState', state.getVideoState());
+    });
+    
+    socket.on('msgVideoEnd', function() {
+      io.sockets.emit('msgVideoEnd');
     });
   });
 }
