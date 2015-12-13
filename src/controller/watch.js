@@ -1,16 +1,14 @@
 var secondsToHHMMSS = require('../util').secondsToHHMMSS;
 var url = require('url');
-
 var ytdl = require('ytdl-core');
 var _ = require('underscore');
-
-var videoInfo = require('./state.js').videoInfo;
+var state = require('./state.js');
 
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
   
   if (query.videoUrl) {
-    if (videoInfo) {
+    if (state.getVideoInfo()) {
       // shouldn't be here
     }
     else {
@@ -21,7 +19,7 @@ function watch(req, res) {
   }
   else {
     res.render('watch', {
-      currentlyPlaying: videoInfo
+      currentlyPlaying: state.getVideoInfo()
     });
   }
 }
@@ -48,7 +46,7 @@ function getInfo(url, callback) {
 }
 
 function setInfo(info, res) {
-  videoInfo = info;
+  state.setVideoInfo(info);
   
   var pageData = {
     currentlyPlaying: info,
