@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var router = require('./router.js');
+var comms = require('./communication');
 
 app.use(express.static('bower_components'));
 app.use(express.static('client'));
@@ -17,3 +18,6 @@ var server = app.listen(3000, function () {
 
   console.log('Example app listening at http://%s:%s', host, port);
 });
+
+var io = require('socket.io')(server);
+comms.setIO(io);
