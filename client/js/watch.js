@@ -3,11 +3,13 @@
 window.onload = init;
 var socket;
 var video;
+var clientServerTimeDifference;
 
 function init() {
   video = document.querySelector('video');
   
   socket = io.connect();
+  socket.on('msgServerTime', receiveServerTimeMessage);
   socket.on('msgVideoEnd', receiveVideoEndMessage);
   socket.on('msgVideoState', receiveVideoStateMessage);
 }
@@ -29,5 +31,18 @@ function receiveVideoStateMessage(videoState) {
 
 function correctPlayTime(playTime, stateTime) {
   // account for message travel time
-  return playTime + (Date.now() - stateTime) / 1000.0;
+  return playTime + (Date.now() - serverToLocalTime(stateTime)) / 1000.0;
+}
+
+function serverToLocalTime(serverTime) {
+  return serverTime - clientServerTimeDifference;
+}
+
+function localToServerTime(localTime) {
+  return localTime + clientServerTimeDifference;
+}
+
+function receiveServerTimeMessage(time) {
+  clientServerTimeDifference = time - Date.now();
+  console.log('clientServerTimeDifference: ' + clientServerTimeDifference);
 }

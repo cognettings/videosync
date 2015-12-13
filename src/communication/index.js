@@ -12,6 +12,8 @@ function setIO(ioChannel) {
       masterId = socket.id;
     }
     
+    socket.emit('msgServerTime', Date.now());
+    
     socket.on('msgVideoState', function (data) {
       masterId = this.id;
       /*

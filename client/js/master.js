@@ -13,7 +13,7 @@ function getVideoState() {
   return {
     isPlaying: !video.paused,
     playTime: video.currentTime,
-    stateTime: Date.now()
+    stateTime: localToServerTime(Date.now())
   };
 }
 
