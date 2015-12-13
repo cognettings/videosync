@@ -1,4 +1,8 @@
 var secondsToHHMMSS = require('../util').secondsToHHMMSS;
+var url = require('url');
+
+var ytdl = require('ytdl-core');
+var videoInfo;
 
 function watch(req, res) {
   var sampleData = {
@@ -16,10 +20,43 @@ function watch(req, res) {
   //res.render('watch');
   
   res.render('watch', {
-    currentlyPlaying: sampleData,
-    isMaster: false
+    currentlyPlaying: videoInfo,
+    isMaster: true
   });
   
 }
 
+function setVideo(req, res, next) {
+  var query = url.parse(req.url, true).query;
+  
+  // todo don't continue if there's already a video playing
+  if (query.videoUrl === undefined) {
+    next();
+  }
+  
+  function extractInfo(err, info) {
+	if (err) {
+		console.log(err);
+        // todo print error to client
+		return;
+	}
+
+	var extract = {
+		thumbnail: info.iurlmq,
+		author: info.author,
+		title: info.title,
+		id: info.video_id,
+		duration: secondsToHHMMSS(info.length_seconds),
+		youtubeUrl: info.loaderUrl,
+		videoUrl: info.formats[0].url
+	};
+
+    videoInfo = extract;
+    console.log(videoInfo);
+    next();
+  } 
+  
+  ytdl.getInfo(query.videoUrl, extractInfo);
+}
 module.exports.watchPage = watch;
+module.exports.setVideo = setVideo;

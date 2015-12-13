@@ -4,7 +4,7 @@ var app = express();
 var router = require('./router.js');
 
 app.use(express.static('bower_components'));
-app.use(express.static('client/css'));
+app.use(express.static('client'));
 
 app.set('view engine', 'jade');
 app.set('views', path.resolve(__dirname + '/views'));

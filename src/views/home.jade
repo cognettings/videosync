@@ -12,7 +12,8 @@ html(lang='en')
     // Bootstrap core CSS
     link(href='bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
     // Custom styles for this template
-    link(href='jumbotron-narrow.css', rel='stylesheet')
+    link(href='css/jumbotron-narrow.css', rel='stylesheet')
+    script(src='js/app.js')
   body
     .container
       .header
@@ -30,9 +31,9 @@ html(lang='en')
       .jumbotron
         h2 Select a YouTube video
         .input-group
-          input.form-control(type='text', placeholder='URL')
+          input.form-control#lblVideoUrl(type='text', placeholder='URL')
           span.input-group-btn
-            button.btn.btn-default(type='button') Watch
+            button.btn.btn-default#btnWatch(type='button') Watch
       .panel.panel-default
         .panel-heading
           h3.panel-title Currently playing
