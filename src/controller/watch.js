@@ -4,7 +4,8 @@ var url = require('url');
 var ytdl = require('ytdl-core');
 var _ = require('underscore');
 
-var videoInfo;
+var videoInfo = require('./state.js').videoInfo;
+
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
   
