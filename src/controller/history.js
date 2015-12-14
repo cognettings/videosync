@@ -7,7 +7,7 @@ function history(req, res) {
 
 function renderHistory(res, err, videos) {
   if (err) {
-    // todo deal with error - redirect to 500
+    res.status(500).send({ error: 'Error: mongoose - could not retrieve video records' });
     return;
   }
   
