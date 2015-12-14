@@ -32,8 +32,8 @@ function receiveVideoStateMessage(videoState) {
   }
 }
 
+// account for message travel time
 function correctPlayTime(playTime, stateTime) {
-  // account for message travel time
   return playTime + (Date.now() - serverToLocalTime(stateTime)) / 1000.0;
 }
 

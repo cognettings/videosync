@@ -1,6 +1,7 @@
 var video = require('../model').video;
 var _ = require('underscore');
 
+// render history page with 10 recently played videos
 function history(req, res) {
   video.videoModel.newestTen(_.partial(renderHistory, res, _, _));
 }

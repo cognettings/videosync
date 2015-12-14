@@ -7,6 +7,7 @@ var video = require('../model').video;
 var comms = require('../communication');
 var urlValidator = require('valid-url');
 
+// renders watch page
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
   
@@ -19,7 +20,7 @@ function watch(req, res) {
       getInfo(query.videoUrl, _.partial(setInfo, _, req, res));
     }
   }
-  else {
+  else { // send video info to regular client
     res.render('watch', {
       currentlyPlaying: state.getVideoInfo()
     });
@@ -29,9 +30,10 @@ function watch(req, res) {
 function getInfo(url, callback) {
   ytdl.getInfo(url, function gotInfo(err, info) {
     if (err) {
-      // shouldn't get here
+      // shouldn't get here because url gets checked elsewhere
     }
     else {
+      // get only some info from what the library gives us
       var extractedInfo = {
         thumbnail: info.iurlmq,
         author: info.author,
@@ -47,6 +49,7 @@ function getInfo(url, callback) {
   });
 }
 
+// set server video info state and inform clients that a video is available
 function setInfo(info, req, res) {
   req.session.isMaster = true;
   state.setVideoInfo(info);
@@ -62,6 +65,7 @@ function setInfo(info, req, res) {
   res.render('watch', pageData);
 }
 
+// save video info to database
 function saveInfo(info) {
   var videoInfo = {
     thumbnail: info.thumbnail,
@@ -79,19 +83,25 @@ function saveInfo(info) {
   });
 }
 
+// validate the url given to us by client (from home page)
+// if good send empty json to client
+// if bad send json with "err" msg in it
 function validateUrl(req, res) {
   var query = url.parse(req.url, true).query;
   
+  // no url was given
   if (!query.videoUrl) {
     res.json({err: 'No url provided'});
     return;
   }
   
+  // a video is already playing (only one can play at a time)
   if (state.getVideoInfo()) {
     res.json({err: 'A video is already playing'});
     return;
   }
   
+  // url is not valid (well-formed)
   if (!urlValidator.isWebUri(query.videoUrl)) {
     res.json({err: 'Not a valid url'});
     return;
