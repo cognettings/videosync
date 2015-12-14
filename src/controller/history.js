@@ -2,7 +2,7 @@ var video = require('../model').video;
 var _ = require('underscore');
 
 function history(req, res) {
-  video.videoModel.all(_.partial(renderHistory, res, _, _));
+  video.videoModel.newestTen(_.partial(renderHistory, res, _, _));
 }
 
 function renderHistory(res, err, videos) {

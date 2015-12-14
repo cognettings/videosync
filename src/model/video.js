@@ -42,6 +42,15 @@ videoSchema.statics.all = function(callback) {
   return videoModel.find(search, callback);
 };
 
+videoSchema.statics.newestTen = function(callback) {
+  var search = {};
+  
+  return videoModel.find(search).
+  limit(10).
+  sort({date: -1}).
+  exec(callback);
+};
+
 videoModel = mongoose.model('video', videoSchema);
 
 module.exports.videoModel = videoModel;
