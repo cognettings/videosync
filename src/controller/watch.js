@@ -5,6 +5,7 @@ var _ = require('underscore');
 var state = require('./state.js');
 var video = require('../model').video;
 var comms = require('../communication');
+var urlValidator = require('valid-url');
 
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
@@ -81,4 +82,36 @@ function saveInfo(info) {
   });
 }
 
+function validateUrl(req, res) {
+  var query = url.parse(req.url, true).query;
+  
+  if (!query.videoUrl) {
+    res.json({err: 'No url provided'});
+    return;
+  }
+  
+  if (state.getVideoInfo()) {
+    res.json({err: 'A video is already playing'});
+    return;
+  }
+  
+  if (!urlValidator.isWebUri(query.videoUrl)) {
+    res.json({err: 'Not a valid url'});
+    return;
+  }
+  
+  function ytdlResponse(err, info) {
+    var responseData = {};
+    
+    if (err) {
+      responseData = {err: 'Couldn\'t find video (make sure the link is from Youtube)'};
+    }
+    
+    res.json(responseData);
+  }
+  
+  ytdl.getInfo(query.videoUrl, ytdlResponse);
+}
+
 module.exports.watchPage = watch;
+module.exports.validateUrl = validateUrl;
