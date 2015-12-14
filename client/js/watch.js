@@ -1,4 +1,5 @@
 // This page requires socket.io: <script src="/socket.io/socket.io.js"></script>
+'use strict'
 
 window.onload = init;
 var socket;

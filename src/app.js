@@ -3,6 +3,16 @@ var path = require('path');
 var app = express();
 var router = require('./router.js');
 var comms = require('./communication');
+var mongoose = require('mongoose');
+
+var dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/wetube';
+
+mongoose.connect(dbUrl, function connectRes(err) {
+  if (err) {
+    console.log('Could not connect to databse.');
+    throw err;
+  }
+});
 
 app.use(express.static('bower_components'));
 app.use(express.static('client'));

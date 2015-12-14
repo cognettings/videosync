@@ -3,6 +3,7 @@ var url = require('url');
 var ytdl = require('ytdl-core');
 var _ = require('underscore');
 var state = require('./state.js');
+var video = require('../model').video;
 
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
@@ -47,6 +48,7 @@ function getInfo(url, callback) {
 
 function setInfo(info, res) {
   state.setVideoInfo(info);
+  saveInfo(info);
   
   var pageData = {
     currentlyPlaying: info,
@@ -54,6 +56,25 @@ function setInfo(info, res) {
   };
   
   res.render('watch', pageData);
+}
+
+function saveInfo(info) {
+  var videoInfo = {
+    thumbnail: info.thumbnail,
+    author: info.author,
+    title: info.title,
+    duration: info.duration,
+    youtubeUrl: info.youtubeUrl
+  };
+  
+  new video.videoModel(videoInfo).save(function savedResult(err) {
+    if (err) {
+      // todo do something with error
+      return;
+    }
+    
+    console.log('video has been saved');
+  });
 }
 
 module.exports.watchPage = watch;
