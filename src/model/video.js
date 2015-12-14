@@ -13,7 +13,6 @@ var videoSchema = new mongoose.Schema({
     type: String
   },
   duration: {
-    // todo this should actually probably be a Number
     type: String
   },
   youtubeUrl: {

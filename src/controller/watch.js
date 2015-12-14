@@ -29,7 +29,7 @@ function watch(req, res) {
 function getInfo(url, callback) {
   ytdl.getInfo(url, function gotInfo(err, info) {
     if (err) {
-      // todo send error to client?
+      // shouldn't get here
     }
     else {
       var extractedInfo = {
@@ -76,9 +76,6 @@ function saveInfo(info) {
       // todo do something with error
       return;
     }
-    
-    // todo remove logging
-    console.log('video has been saved');
   });
 }
 
