@@ -16,6 +16,7 @@ function init() {
   socket.on('msgVideoReady', receiveVideoReadyMessage);
 }
 
+// Redirect client to home page when video ends
 function receiveVideoEndMessage() {
   window.location = '/';
 }
