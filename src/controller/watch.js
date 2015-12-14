@@ -15,8 +15,7 @@ function watch(req, res) {
     }
     else {
       // Get info from youtube, set info on server, render page with info to client
-      //getInfo(query.videoUrl, _.partial(setInfo, _, _.partial(res.render, 'watch')));
-      getInfo(query.videoUrl, _.partial(setInfo, _, res));
+      getInfo(query.videoUrl, _.partial(setInfo, _, req, res));
     }
   }
   else {
@@ -47,7 +46,8 @@ function getInfo(url, callback) {
   });
 }
 
-function setInfo(info, res) {
+function setInfo(info, req, res) {
+  req.session.isMaster = true;
   state.setVideoInfo(info);
   saveInfo(info);
   

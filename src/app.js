@@ -4,6 +4,7 @@ var app = express();
 var router = require('./router.js');
 var comms = require('./communication');
 var mongoose = require('mongoose');
+var session = require('express-session');
 
 var dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost/wetube';
 
@@ -16,6 +17,11 @@ mongoose.connect(dbUrl, function connectRes(err) {
 
 app.use(express.static('bower_components'));
 app.use(express.static('client'));
+app.use(session({
+  secret: 'i need a beer... or two',
+  saveUninitialized: true,
+  resave: false
+}));
 
 app.set('view engine', 'jade');
 app.set('views', path.resolve(__dirname + '/views'));
