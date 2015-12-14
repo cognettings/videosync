@@ -50,5 +50,7 @@ function receiveServerTimeMessage(time) {
 
 // Refreshes the page to load the video that just started playing.
 function receiveVideoReadyMessage() {
-  history.go(0);
+  window.setTimeout(function refreshPage() {
+    history.go(0);
+  }, 1000);
 }
