@@ -1,8 +1,8 @@
-var state = {
+var state = null; /*{
   isPlaying: false,
   playTime: 0,
   stateTime: Date.now()
-};
+};*/
 
 function setState(newState) {
   state = newState;
