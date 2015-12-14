@@ -13,6 +13,7 @@ function init() {
   socket.on('msgServerTime', receiveServerTimeMessage);
   socket.on('msgVideoEnd', receiveVideoEndMessage);
   socket.on('msgVideoState', receiveVideoStateMessage);
+  socket.on('msgVideoReady', receiveVideoReadyMessage);
 }
 
 function receiveVideoEndMessage() {
@@ -45,5 +46,9 @@ function localToServerTime(localTime) {
 
 function receiveServerTimeMessage(time) {
   clientServerTimeDifference = time - Date.now();
-  console.log('clientServerTimeDifference: ' + clientServerTimeDifference);
+}
+
+// Refreshes the page to load the video that just started playing.
+function receiveVideoReadyMessage() {
+  history.go(0);
 }

@@ -4,6 +4,7 @@ var ytdl = require('ytdl-core');
 var _ = require('underscore');
 var state = require('./state.js');
 var video = require('../model').video;
+var comms = require('../communication');
 
 function watch(req, res) {
   var query = url.parse(req.url, true).query;
@@ -50,6 +51,8 @@ function setInfo(info, res) {
   state.setVideoInfo(info);
   saveInfo(info);
   
+  comms.sendVideoReadyMessage();
+  
   var pageData = {
     currentlyPlaying: info,
     isMaster: true
@@ -73,6 +76,7 @@ function saveInfo(info) {
       return;
     }
     
+    // todo remove logging
     console.log('video has been saved');
   });
 }
