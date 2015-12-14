@@ -15,4 +15,4 @@ function getState() {
 module.exports = {
   setVideoState: setState,
   getVideoState: getState
-}
+};
